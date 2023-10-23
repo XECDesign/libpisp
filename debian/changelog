@@ -1,0 +1,5 @@
+libpisp (1.0.0-1) bookworm; urgency=medium
+
+  * Initial release.
+
+ -- Serge Schneider <serge@raspberrypi.com>  Tue, 26 Sep 2023 10:49:04 +0000
