@@ -1,3 +1,12 @@
+libpisp (1.0.2-1) bookworm; urgency=medium
+
+  * New upstream version 1.0.2
+  * d/watch: Use the Raspberry Pi Github releases
+  * d/gbp.conf: switch to tarball releases
+  * d/c: Rename libpisp1.0.0 package to libpisp1
+
+ -- Serge Schneider <serge@raspberrypi.com>  Wed, 22 Nov 2023 18:01:13 +0000
+
 libpisp (1.0.0-1) bookworm; urgency=medium
 
   * Initial release.
