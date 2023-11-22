@@ -7,6 +7,9 @@
  */
 #include "frontend.hpp"
 
+#include <cstddef>
+#include <type_traits>
+
 #include "common/logging.hpp"
 #include "common/utils.hpp"
 
@@ -140,47 +143,58 @@ void finalise_compression(pisp_fe_config const &fe_config, int i)
 		PISP_LOG(fatal, "FrontEnd::finalise: compressed output is not 8 bit");
 }
 
+template <typename T>
+std::enable_if_t<std::is_integral_v<T>> inline div2_round_e(T &val)
+{
+	// Divide by 2 and round to the next even number.
+	val = ((val + 2) & ~3) >> 1;
+}
+
 void decimate_config(pisp_fe_config &fe_config)
 {
 	if (fe_config.global.enables & PISP_FE_ENABLE_LSC)
 	{
-		fe_config.lsc.centre_x >>= 1;
-		fe_config.lsc.centre_y >>= 1;
+		div2_round_e(fe_config.lsc.centre_x);
+		div2_round_e(fe_config.lsc.centre_y);
 	}
 
 	if (fe_config.global.enables & PISP_FE_ENABLE_CDAF_STATS)
 	{
-		fe_config.cdaf_stats.offset_x >>= 1;
-		fe_config.cdaf_stats.offset_y >>= 1;
-		fe_config.cdaf_stats.size_x >>= 1;
-		fe_config.cdaf_stats.size_y >>= 1;
-		fe_config.cdaf_stats.skip_x >>= 1;
-		fe_config.cdaf_stats.skip_y >>= 1;
+		div2_round_e(fe_config.cdaf_stats.offset_x);
+		div2_round_e(fe_config.cdaf_stats.offset_y);
+		div2_round_e(fe_config.cdaf_stats.size_x);
+		div2_round_e(fe_config.cdaf_stats.size_y);
+		div2_round_e(fe_config.cdaf_stats.skip_x);
+		div2_round_e(fe_config.cdaf_stats.skip_y);
 	}
 
 	if (fe_config.global.enables & PISP_FE_ENABLE_AWB_STATS)
 	{
-		fe_config.awb_stats.offset_x >>= 1;
-		fe_config.awb_stats.offset_y >>= 1;
-		fe_config.awb_stats.size_x >>= 1;
-		fe_config.awb_stats.size_y >>= 1;
+		div2_round_e(fe_config.awb_stats.offset_x);
+		div2_round_e(fe_config.awb_stats.offset_y);
+		div2_round_e(fe_config.awb_stats.size_x);
+		div2_round_e(fe_config.awb_stats.size_y);
 	}
 
 	if (fe_config.global.enables & PISP_FE_ENABLE_AGC_STATS)
 	{
-		fe_config.agc_stats.offset_x >>= 1;
-		fe_config.agc_stats.offset_y >>= 1;
-		fe_config.agc_stats.size_x >>= 1;
-		fe_config.agc_stats.size_y >>= 1;
+		div2_round_e(fe_config.agc_stats.offset_x);
+		div2_round_e(fe_config.agc_stats.offset_y);
+		div2_round_e(fe_config.agc_stats.size_x);
+		div2_round_e(fe_config.agc_stats.size_y);
+		div2_round_e(fe_config.agc_stats.row_offset_x);
+		div2_round_e(fe_config.agc_stats.row_offset_y);
+		div2_round_e(fe_config.agc_stats.row_size_x);
+		div2_round_e(fe_config.agc_stats.row_size_y);
 	}
 
 	for (unsigned int i = 0; i < PISP_FLOATING_STATS_NUM_ZONES; i++)
 	{
 		pisp_fe_floating_stats_region &region = fe_config.floating_stats.regions[i];
-		region.offset_x >>= 1;
-		region.offset_y >>= 1;
-		region.size_x >>= 1;
-		region.size_y >>= 1;
+		div2_round_e(region.offset_x);
+		div2_round_e(region.offset_y);
+		div2_round_e(region.size_x);
+		div2_round_e(region.size_y);
 	}
 }
 
@@ -413,12 +427,6 @@ void FrontEnd::Prepare(pisp_fe_config *config)
 	{
 		width = fe_config_.stats_crop.width;
 		height = fe_config_.stats_crop.height;
-	}
-
-	if (fe_config_.global.enables & PISP_FE_ENABLE_DECIMATE)
-	{
-		width = ((width + 2) & ~3) >> 1;
-		height = 2 * (height >> 2) + ((height & 3) ? 1 : 0);
 	}
 
 	if (dirty_flags & PISP_FE_ENABLE_LSC)
