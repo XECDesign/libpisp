@@ -20,7 +20,7 @@ Section: libdevel
 Architecture: any
 Multi-Arch: same
 Depends:
- libpisp1.0.0 (= ${binary:Version}),
+ libpisp1 (= ${binary:Version}),
  ${misc:Depends},
  nlohmann-json3-dev
 Description: Helper library for the PiSP hardware block (development files)
@@ -32,13 +32,15 @@ Description: Helper library for the PiSP hardware block (development files)
  .
  This package contains the development files.
 
-Package: libpisp1.0.0
+Package: libpisp1
 Architecture: any
 Multi-Arch: same
 Depends:
  ${shlibs:Depends},
  ${misc:Depends},
  libpisp-common (= ${source:Version})
+Breaks: libpisp1.0.0
+Replaces: libpisp1.0.0
 Description: Helper library for the PiSP hardware block (runtime)
  This library provides helper functions to generate hardware
  configuration for the PiSP hardware blocks.  The configuration
