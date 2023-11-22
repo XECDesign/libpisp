@@ -1,6 +1,5 @@
-# Compulsory line, this is a version 4 file.
 version=4
-
-opts="filenamemangle=s%(?:.*?)?v?(@ANY_VERSION@@ARCHIVE_EXT@)%@PACKAGE@-$1%" \
-    https://github.com/raspberrypi/libpisp/tags \
-    (?:.*?/)v?@ANY_VERSION@@ARCHIVE_EXT@
+opts="searchmode=plain,\
+uversionmangle=s/%2B/+/g" \
+https://api.github.com/repos/raspberrypi/@PACKAGE@/releases?per_page=50 \
+https://github\.com/[^/]+/[^/]+/releases/download/.*/@PACKAGE@-(.*)\.tar\.xz
