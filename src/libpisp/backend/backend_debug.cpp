@@ -201,7 +201,7 @@ const std::vector<config_block> be_config {
 		{
 			{ "grid_step_x", offsetof(pisp_be_lsc_config, grid_step_x), sizeof(uint16_t), 1 },
 			{ "grid_step_y", offsetof(pisp_be_lsc_config, grid_step_y), sizeof(uint16_t), 1 },
-			{ "lut_packed", offsetof(pisp_be_lsc_config, lut_packed), sizeof(uint16_t), PISP_ARRAY_SIZE(pisp_be_lsc_config, lut_packed) },
+			{ "lut_packed", offsetof(pisp_be_lsc_config, lut_packed), sizeof(uint32_t), PISP_ARRAY_SIZE(pisp_be_lsc_config, lut_packed) },
 		}
 	},
 	{
@@ -419,16 +419,8 @@ const std::vector<config_block> be_config {
 			{ "channel_mix", offsetof(pisp_be_hog_config, channel_mix), sizeof(uint8_t), PISP_ARRAY_SIZE(pisp_be_hog_config, channel_mix) },
 			{ "stride", offsetof(pisp_be_hog_config, stride), sizeof(uint32_t), 1 },
 		}
-	},
-	{
-		"axi", offsetof(pisp_be_config, axi),
-		{
-			{ "r_qos", offsetof(pisp_be_axi_config, r_qos), sizeof(uint8_t), 1 },
-			{ "r_cache_prot", offsetof(pisp_be_axi_config, r_cache_prot), sizeof(uint8_t), 1 },
-			{ "w_qos", offsetof(pisp_be_axi_config, w_qos), sizeof(uint8_t), 1 },
-			{ "w_cache_prot", offsetof(pisp_be_axi_config, w_cache_prot), sizeof(uint8_t), 1 },
-		}
 	}
+	/* The "axi" field here is never configured or used; the real BE_AXI register is not part of the config */
 };
 
 const config_block tiles_config {

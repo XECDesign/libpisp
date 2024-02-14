@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: CC0-1.0
+# Copyright (C) 2023, Raspberry Pi Ltd
+
 pisp_sources = []
 inc_dirs = ['.', 'libpisp']
 
@@ -12,6 +15,10 @@ pisp_deps = [
     dependency('nlohmann_json', fallback : ['nlohmann_json', 'nlohmann_json_dep']),
     dependency('threads')
 ]
+
+# Meson version >= 0.64 can simply use dependency('dl') for this, but we don't want to bump up the min version just yet.
+dl_dep = meson.get_compiler('c').find_library('dl', required : true)
+pisp_deps += dl_dep
 
 logging_dep = dependency('boost', modules : ['log', 'log_setup', 'thread', 'system'], required : get_option('logging'))
 if logging_dep.found()
@@ -51,6 +58,7 @@ libpisp = library(
     include_directories : include_directories(inc_dirs),
     name_prefix : '',
     install : true,
+    build_rpath : meson.project_source_root(),
     dependencies : pisp_deps,
 )
 
