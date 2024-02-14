@@ -111,7 +111,6 @@ public:
 	void SetDownscale(unsigned int i, pisp_be_downscale_config const &downscale,
 					  pisp_be_downscale_extra const &downscale_extra);
 	void SetDownscale(unsigned int i, pisp_be_downscale_extra const &downscale_extra);
-	void SetHog(pisp_be_hog_config const &hog);
 
 	void InitialiseYcbcr(pisp_be_ccm_config &ycbcr, const std::string &colour_space);
 	void InitialiseYcbcrInverse(pisp_be_ccm_config &ycbcr_inverse, const std::string &colour_space);
@@ -120,12 +119,9 @@ public:
 	void InitialiseSharpen(pisp_be_sharpen_config &sharpen, pisp_be_sh_fc_combine_config &shfc);
 
 	void Prepare(pisp_be_tiles_config *config);
-	void MergeConfig(const pisp_be_config &config);
 
 	bool ComputeOutputImageFormat(unsigned int i, pisp_image_format_config &output_format,
 								  pisp_image_format_config const &input_format) const;
-	bool ComputeHogOutputImageFormat(pisp_image_format_config &output_format,
-									 pisp_image_format_config const &input_format) const;
 
 	void SetSmartResize(unsigned int i, SmartResize const &smart_resize);
 
