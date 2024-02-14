@@ -1,3 +1,10 @@
+libpisp (1.0.4-1) bookworm; urgency=medium
+
+  * New upstream version 1.0.4
+  * d/watch: fix match pattern
+
+ -- Serge Schneider <serge@raspberrypi.com>  Wed, 14 Feb 2024 13:58:39 +0000
+
 libpisp (1.0.2-1) bookworm; urgency=medium
 
   * New upstream version 1.0.2
